@@ -1,0 +1,25 @@
+[Unit]
+Description=kuafu-agent-backend (每日 AI 新闻助手 FastAPI)
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/opt/kuafu-agent/backend
+EnvironmentFile=/opt/kuafu-agent/kuafu-agent.env
+# 密钥在 EnvironmentFile 里；.env 若存在也会被读取，二者取其一即可
+ExecStart=/opt/kuafu-agent/backend/.venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8080
+Restart=on-failure
+RestartSec=5
+# 小服务器（1.6Gi）保护：单进程上限 700M，超了被 OOM 而不是拖垮整机
+MemoryMax=700M
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=kuafu-agent
+
+[Install]
+WantedBy=multi-user.target

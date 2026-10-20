@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>每日 AI 新闻助手</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="ambient" aria-hidden="true"></div>
+
+  <header class="top">
+    <div class="brand">
+      <span class="logo" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 5h11a3 3 0 0 1 3 3v11H7a3 3 0 0 1-3-3V5z" />
+          <path d="M8 9h6M8 13h6M8 17h3" />
+          <path d="M18 8h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2" />
+        </svg>
+      </span>
+      <div>
+        <h1>每日 AI 新闻助手</h1>
+        <p class="sub">联网检索 · 文档 OCR · 一键溯源</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="card profile-card">
+      <div class="card-head">
+        <h2>身份与订阅</h2>
+        <span class="hint">决定为你检索什么</span>
+      </div>
+      <form id="profile">
+        <label>称呼<input name="name" required maxlength="50" placeholder="例如：林夏" /></label>
+        <label>邮箱<span class="opt">可选</span><input name="email" type="email" maxlength="120" placeholder="仅用于区分身份" /></label>
+        <label>关注话题<input name="topics" placeholder="开源模型, 编程助手" /></label>
+        <label>关键词<input name="keywords" placeholder="agent, LLM, RAG" /></label>
+        <label>简报语言
+          <select name="language">
+            <option value="zh">简体中文</option>
+            <option value="en">English</option>
+          </select>
+        </label>
+        <label>检索条数<input name="recall_count" type="number" min="1" max="30" step="1" value="5" /></label>
+        <label>自定义要求<span class="opt">最多 500 字</span><textarea name="custom_prompt" rows="3" maxlength="500" placeholder="仅仅输出国内的资讯">仅仅输出国内的资讯</textarea></label>
+        <div class="row">
+          <button type="submit" class="ghost">保存偏好</button>
+          <button type="button" id="run" class="primary">
+            <span class="btn-label">生成今日简报</span>
+            <span class="spinner" hidden></span>
+          </button>
+        </div>
+        <p id="status" class="status"></p>
+      </form>
+    </section>
+
+    <section class="card history-card">
+      <div class="card-head">
+        <h2>历史简报</h2>
+      </div>
+      <ul id="history" class="history"></ul>
+    </section>
+
+    <article class="card brief">
+      <div class="brief-head">
+        <h2 id="brief-title">今天还没有简报</h2>
+        <span id="brief-status" class="pill" hidden></span>
+      </div>
+      <p id="brief-meta" class="meta"></p>
+      <div id="brief-body" class="body empty-state">
+        填好话题和关键词后，直接点「生成今日简报」。助手会按当前输入去检索，原文链接可以点开。
+      </div>
+      <h3 class="subhead">信息来源 · 点击溯源</h3>
+      <ul id="brief-sources" class="sources">
+        <li class="meta">本期暂无来源条目。</li>
+      </ul>
+    </article>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
